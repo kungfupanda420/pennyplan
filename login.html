@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PennyPlan</title>
+</head>
+<body>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('background.jpg'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Login Container */
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        .login-container h1 {
+            margin-bottom: 20px;
+            color: #008080;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #00cdaf;
+        }
+
+        .login-container .forgot-password {
+            margin-top: 15px;
+            display: block;
+            color: #008080;
+            text-decoration: none;
+        }
+
+        .login-container .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .terms-container {
+            margin: 15px 0;
+            font-size: 0.9em;
+            text-align: left;
+        }
+
+        .terms-container label {
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="login-container">
+        <h1>Login</h1>
+        <form onsubmit="handleLogin(event)">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <div class="terms-container">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">I agree to the <a href="#" style="color: #008080;">Terms and Conditions</a></label>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <a href="#" class="forgot-password">Forgot Password?</a>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault(); // Prevent the default form submission
+            if (document.getElementById('terms').checked) {
+                // Redirect to details page
+                window.location.href = 'details.html';
+            } else {
+                alert('Please agree to the Terms and Conditions to continue.');
+            }
+        }
+    </script>
+</body>
+</html>

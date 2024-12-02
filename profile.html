@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - PennyPlan</title>
+</head>
+<body>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Profile Container */
+        .profile-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+
+        .profile-container h1 {
+            color: #008080;
+            margin-bottom: 20px;
+        }
+
+        .profile-details {
+            text-align: left;
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        .profile-details p {
+            margin: 10px 0;
+        }
+
+        .profile-details strong {
+            color: #333;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #008080;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #00cdaf;
+        }
+    </style>
+
+    <div class="profile-container">
+        <h1>Your Profile</h1>
+        <div class="profile-details">
+            <p><strong>Name:</strong> <span id="user-name">Loading...</span></p>
+            <p><strong>Email:</strong> <span id="user-email">Loading...</span></p>
+            <p><strong>Monthly Salary:</strong> <span id="user-salary">Loading...</span></p>
+        </div>
+        <div class="btn-container">
+            <a href="next.html" class="btn">Home</a>
+            <a href="details.html" class="btn">Edit Profile</a>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve user data from localStorage and display it dynamically
+        document.addEventListener("DOMContentLoaded", function () {
+            const name = localStorage.getItem("userName") || "Not Set";
+            const email = localStorage.getItem("userEmail") || "Not Set";
+            const salary = localStorage.getItem("userSalary") || "Not Set";
+
+            document.getElementById("user-name").textContent = name;
+            document.getElementById("user-email").textContent = email;
+            document.getElementById("user-salary").textContent = salary;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+=<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminder - PennyPlan</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jpg'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        h1 {
+            color: #008080;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px #ffffff;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #00cdaf;
+        }
+
+        .notifications {
+            margin-top: 20px;
+            text-align: left;
+            width: 300px;
+        }
+
+        .notification {
+            background-color: #f0f8ff;
+            border-left: 5px solid #008080;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Set a Reminder</h1>
+    <div class="form-container">
+        <form onsubmit="setReminder(event)">
+            <input type="text" id="reminderName" placeholder="Reminder Name" required>
+            <input type="date" id="reminderDate" required>
+            <button type="submit">Set Reminder</button>
+        </form>
+    </div>
+    <div class="notifications" id="notifications"></div>
+
+    <script>
+        function setReminder(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('reminderName').value;
+            const date = document.getElementById('reminderDate').value;
+
+            if (!name || !date) {
+                alert('Please fill in both fields.');
+                return;
+            }
+
+            // Save reminder in localStorage
+            const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+            reminders.push({ name, date });
+            localStorage.setItem('reminders', JSON.stringify(reminders));
+
+            alert('Reminder set successfully!');
+            checkReminders();
+        }
+
+        function checkReminders() {
+            const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+            const notificationsDiv = document.getElementById('notifications');
+            notificationsDiv.innerHTML = ''; // Clear previous notifications
+
+            const today = new Date();
+            reminders.forEach(reminder => {
+                const reminderDate = new Date(reminder.date);
+                const timeDiff = Math.ceil((reminderDate - today) / (1000 * 60 * 60 * 24)); // Days difference
+
+                if (timeDiff <= 5 && timeDiff > 0) {
+                    const notification = document.createElement('div');
+                    notification.className = 'notification';
+                    notification.innerHTML = `
+                        <strong>${reminder.name}</strong> is due in <strong>${timeDiff} days</strong> (on ${reminder.date}).
+                    `;
+                    notificationsDiv.appendChild(notification);
+                }
+            });
+        }
+
+        // Run checkReminders on page load
+        document.addEventListener('DOMContentLoaded', checkReminders);
+    </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. Saver - Income Distribution</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jpg'); /* Replace with the correct path to your background image */
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #008080;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #00cdaf;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .good {
+            background-color: #f0f8ff;
+            border-left: 5px solid #008080;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .normal {
+            background-color: #ffefef;
+            border-left: 5px solid #ff6347;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mr. Saver - Plan Your Budget</h1>
+        <form onsubmit="calculateDistribution(event)">
+            <input type="number" id="salary" placeholder="Enter Monthly Salary" required>
+            <input type="number" id="loan" placeholder="Enter Monthly Loan Payment" required>
+            <button type="submit">Calculate</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateDistribution(event) {
+            event.preventDefault();
+
+            const salary = parseFloat(document.getElementById('salary').value);
+            const loan = parseFloat(document.getElementById('loan').value);
+
+            if (isNaN(salary) || isNaN(loan) || salary <= 0 || loan < 0) {
+                alert('Please enter valid amounts for salary and loan.');
+                return;
+            }
+
+            const available = salary - loan;
+
+            // Good Distribution based on the table
+            const goodSavings = (available * 0.5).toFixed(2);
+            const goodFood = (available * 0.2).toFixed(2);
+            const goodEntertainment = (available * 0.05).toFixed(2);
+            const goodEducation = (available * 0.1).toFixed(2);
+            const goodOthers = (available * 0.15).toFixed(2);
+
+            // Normal Distribution (Assume more discretionary spending)
+            const normalSavings = (available * 0.3).toFixed(2);
+            const normalFood = (available * 0.3).toFixed(2);
+            const normalEntertainment = (available * 0.15).toFixed(2);
+            const normalEducation = (available * 0.15).toFixed(2);
+            const normalOthers = (available * 0.1).toFixed(2);
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3>Good Distribution</h3>
+                <div class="good">
+                    <p><strong>Savings:</strong> ₹${goodSavings}</p>
+                    <p><strong>Food:</strong> ₹${goodFood}</p>
+                    <p><strong>Entertainment:</strong> ₹${goodEntertainment}</p>
+                    <p><strong>Education:</strong> ₹${goodEducation}</p>
+                    <p><strong>Others:</strong> ₹${goodOthers}</p>
+                </div>
+                <h3>Normal Distribution</h3>
+                <div class="normal">
+                    <p><strong>Savings:</strong> ₹${normalSavings}</p>
+                    <p><strong>Food:</strong> ₹${normalFood}</p>
+                    <p><strong>Entertainment:</strong> ₹${normalEntertainment}</p>
+                    <p><strong>Education:</strong> ₹${normalEducation}</p>
+                    <p><strong>Others:</strong> ₹${normalOthers}</p>
+                </div>
+                <h3>Difference</h3>
+                <p><strong>Savings:</strong> ₹${(goodSavings - normalSavings).toFixed(2)}</p>
+                <p><strong>Food:</strong> ₹${(goodFood - normalFood).toFixed(2)}</p>
+                <p><strong>Entertainment:</strong> ₹${(goodEntertainment - normalEntertainment).toFixed(2)}</p>
+                <p><strong>Education:</strong> ₹${(goodEducation - normalEducation).toFixed(2)}</p>
+                <p><strong>Others:</strong> ₹${(goodOthers - normalOthers).toFixed(2)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

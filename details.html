@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details - PennyPlan</title>
+</head>
+<body>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('background.jpg'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Details Container */
+        .details-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        .details-container h1 {
+            margin-bottom: 20px;
+            color: #008080;
+        }
+
+        .details-container input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .details-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .details-container button:hover {
+            background-color: #00cdaf;
+        }
+    </style>
+
+    <div class="details-container">
+        <h1>Enter Your Details</h1>
+        <form id="detailsForm">
+            <input type="text" id="name" placeholder="Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="number" id="salary" placeholder="Monthly Salary" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Handle form submission and store data in localStorage
+        document.getElementById('detailsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const salary = document.getElementById('salary').value;
+
+            // Save details in localStorage
+            const userDetails = {
+                name: name,
+                email: email,
+                salary: salary
+            };
+
+            localStorage.setItem('userDetails', JSON.stringify(userDetails));
+
+            // Redirect to the home or main page after submission
+            window.location.href = 'next.html';  // Replace with the actual page you want to redirect to
+        });
+    </script>
+</body>
+</html>

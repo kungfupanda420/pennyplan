@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tracker - PennyPlan</title>
+</head>
+<body>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tracker-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        .tracker-container h1 {
+            margin-bottom: 20px;
+            color: #008080;
+        }
+
+        .tracker-container input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .tracker-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .tracker-container button:hover {
+            background-color: #00cdaf;
+        }
+
+        .reset-button {
+            background-color: red;
+            margin-top: 20px;
+        }
+
+        .reset-button:hover {
+            background-color: darkred;
+        }
+
+        .home-button {
+            background-color: #008080;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            display: inline-block;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .home-button:hover {
+            background-color: #00cdaf;
+        }
+    </style>
+
+    <div class="tracker-container">
+        <a href="next.html" class="home-button">Home</a>
+        <h1>Track Your Expenses</h1>
+        <form id="expenseForm">
+            <input type="number" id="food" placeholder="Food Expense" min="0">
+            <input type="number" id="travel" placeholder="Travel Expense" min="0">
+            <input type="number" id="education" placeholder="Education Expense" min="0">
+            <input type="number" id="entertainment" placeholder="Entertainment Expense" min="0">
+            <input type="number" id="loans" placeholder="Loans Expense" min="0">
+            <input type="number" id="others" placeholder="Other Expenses" min="0">
+            <button type="submit">Update Expenses</button>
+        </form>
+
+        <button class="reset-button" onclick="resetExpenses()">Reset Expenses</button>
+
+        <h3>Current Monthly Expenses</h3>
+        <p><strong>Food:</strong> <span id="foodTotal">0</span></p>
+        <p><strong>Travel:</strong> <span id="travelTotal">0</span></p>
+        <p><strong>Education:</strong> <span id="educationTotal">0</span></p>
+        <p><strong>Entertainment:</strong> <span id="entertainmentTotal">0</span></p>
+        <p><strong>Loans:</strong> <span id="loansTotal">0</span></p>
+        <p><strong>Others:</strong> <span id="othersTotal">0</span></p>
+        <a href="next.html" class="home-button">Home</a>
+
+    </div>
+
+    <script>
+        // Load stored expenses
+        function loadExpenses() {
+            const expenses = JSON.parse(localStorage.getItem('expenses')) || {
+                food: 0,
+                travel: 0,
+                education: 0,
+                entertainment: 0,
+                loans: 0,
+                others: 0
+            };
+
+            document.getElementById('foodTotal').innerText = expenses.food;
+            document.getElementById('travelTotal').innerText = expenses.travel;
+            document.getElementById('educationTotal').innerText = expenses.education;
+            document.getElementById('entertainmentTotal').innerText = expenses.entertainment;
+            document.getElementById('loansTotal').innerText = expenses.loans;
+            document.getElementById('othersTotal').innerText = expenses.others;
+        }
+
+        // Handle form submission and update expenses
+        document.getElementById('expenseForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const food = parseFloat(document.getElementById('food').value) || 0;
+            const travel = parseFloat(document.getElementById('travel').value) || 0;
+            const education = parseFloat(document.getElementById('education').value) || 0;
+            const entertainment = parseFloat(document.getElementById('entertainment').value) || 0;
+            const loans = parseFloat(document.getElementById('loans').value) || 0;
+            const others = parseFloat(document.getElementById('others').value) || 0;
+
+            const currentExpenses = JSON.parse(localStorage.getItem('expenses')) || {
+                food: 0,
+                travel: 0,
+                education: 0,
+                entertainment: 0,
+                loans: 0,
+                others: 0
+            };
+
+            currentExpenses.food += food;
+            currentExpenses.travel += travel;
+            currentExpenses.education += education;
+            currentExpenses.entertainment += entertainment;
+            currentExpenses.loans += loans;
+            currentExpenses.others += others;
+
+            localStorage.setItem('expenses', JSON.stringify(currentExpenses));
+            loadExpenses();
+        });
+
+        // Reset all expenses
+        function resetExpenses() {
+            const resetData = {
+                food: 0,
+                travel: 0,
+                education: 0,
+                entertainment: 0,
+                loans: 0,
+                others: 0
+            };
+            localStorage.setItem('expenses', JSON.stringify(resetData));
+            loadExpenses();
+        }
+
+        // Initialize page with saved expenses
+        loadExpenses();
+    </script>
+</body>
+</html>
